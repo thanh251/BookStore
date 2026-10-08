@@ -114,4 +114,4 @@ cd backend && npm run build
 cd ../frontend && npm run build
 ```
 
-Deploy the backend with its environment variables and MySQL connection available, then serve the contents of `frontend/dist`. Configure the frontend's API and image URLs for the deployed backend origin.
+Deploy the backend with its environment variables and MySQL connection available, then serve the contents of `frontend/dist`. Configure the frontend's API and image URLs for the deployed backend original one.
