@@ -48,7 +48,11 @@ cd ../frontend
 npm install
 ```
 
-Create `backend/.env` with your local settings. Do not commit this file.
+Copy the environment template, then replace every placeholder with local credentials. Keep `backend/.env` uncommitted.
+
+```bash
+cp backend/.env.example backend/.env
+```
 
 ```dotenv
 PORT=3000
