@@ -33,19 +33,16 @@ BookStore is a full-stack web application for browsing and purchasing books. It 
 
 - Node.js 20 or later
 - MySQL 8 or a compatible MySQL server
-- A database named `bookstore` with the tables required by the API
+- A MySQL account that can create the `bookstore` database and its tables
 - A Groq API key only if the chat assistant will be used
 
 ## Getting started
 
-Install dependencies for each application:
+Run the setup commands from the repository root. Install dependencies for each application:
 
 ```bash
-cd backend
-npm install
-
-cd ../frontend
-npm install
+npm --prefix backend install
+npm --prefix frontend install
 ```
 
 Copy the environment template, then replace every placeholder with local credentials. Keep `backend/.env` uncommitted.
@@ -65,6 +62,32 @@ JWT_SECRET=replace_with_a_long_random_value
 JWT_EXPIRES_IN=7d
 GROQ_API_KEY=optional_groq_api_key
 ```
+
+### Create the database schema
+
+From the repository root, run the schema script with a MySQL account that can create databases and tables:
+
+```bash
+mysql -u root -p < backend/database/schema.sql
+```
+
+The script creates the `bookstore` database and the tables used by authentication, catalog, cart, wishlist, review, and order endpoints. It is safe to run again because each database object uses `IF NOT EXISTS`.
+
+Confirm that the tables were created:
+
+```bash
+mysql -u root -p -D bookstore -e "SHOW TABLES;"
+```
+
+If the application uses a different database name, update both `DB_NAME` in `backend/.env` and the `CREATE DATABASE`/`USE` statements in `backend/database/schema.sql` before importing it.
+
+### Check the database connection
+
+Before starting the API, make sure MySQL is running and that the database and credentials match `backend/.env`. The connection settings are read from `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME`.
+
+On startup, the API checks the connection and logs `MySQL connected!` on success or `MySQL connection failed:` followed by the error. A successful connection confirms database access; use the schema import above before calling API endpoints.
+
+### Start the applications
 
 Start the API in one terminal:
 
